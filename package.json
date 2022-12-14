@@ -14,10 +14,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.1",
     "commander": "^9.4.1",
     "csv": "^6.2.5",
+    "csv-parse": "^5.3.3",
+    "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "smartystreets-javascript-sdk": "^2.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.12",

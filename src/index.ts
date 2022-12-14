@@ -1,8 +1,10 @@
 #! /usr/bin/env node
 
-const { Command } = require("commander");
-import { readFile } from "./components/readFile";
+import { parseFile } from "./components/parseFile";
+import { validateFile } from "./components/validateFile";
+import { printResult } from "./components/printResult";
 
+const { Command } = require("commander");
 //create the program (instance of Command)
 const program = new Command();
 
@@ -12,10 +14,11 @@ const program = new Command();
 //  [1] = 'command name'
 //  [2] = 'options'
 //  [3] = additional arguments
+
 program
   .name("validate-address")
   .version("1.0.0")
-  .description("A CLI program for validating US addresses from a CSV file using a 3rd party API")
+  .description("A CLI program for validating US addresses from a CSV file using smarty.com API")
   .option("-f, --filename [value]", "specify CSV file to evaluate")
   .option("-he, --hello [value]", "test hello [name]")
   .parse(process.argv);
@@ -23,8 +26,24 @@ program
 //returns object with all program options
 const options = program.opts();
 
+//evaluate csv file
+const evaluate = () => {
+  if (options.filename) {
+    //save the csv fileName from command argument
+    const fileName = process.argv[3];
 
-//create options
+    //read and parse the csv file (addressList is an array of objects)
+    const addressList: any = parseFile(fileName);
+
+    //validate the address list with the smarty.com API
+    const validatedList = validateFile(addressList);
+  
+    //print the result
+    
+  }  
+}
+
+
 const hello = () =>{ 
   // check if the option has been used the user
   if (options.hello) {
