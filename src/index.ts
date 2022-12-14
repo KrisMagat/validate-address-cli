@@ -27,7 +27,7 @@ program
 const options = program.opts();
 
 //evaluate csv file
-const evaluate = () => {
+const evaluate = async () => {
   if (options.filename) {
     //save the csv fileName from command argument
     const fileName = process.argv[3];
@@ -36,13 +36,12 @@ const evaluate = () => {
     const addressList: any = parseFile(fileName);
 
     //validate the address list with the smarty.com API
-    const validatedList = validateFile(addressList);
+    const verifiedList = await validateFile(addressList);
   
     //print the result
-    
+    printResult(addressList, verifiedList);
   }  
 }
-
 
 const hello = () =>{ 
   // check if the option has been used the user
