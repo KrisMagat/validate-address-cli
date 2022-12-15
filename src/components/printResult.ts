@@ -1,11 +1,22 @@
 //print result from validation
-import { addressList } from "./validateFile";
 
-export const printResult = (addressList: addressList, verifiedList: string[] | Error) => {
-  if (Array.isArray(verifiedList))
-    for (let i = 0; i < addressList.length; i++) {
-      process.stdout.write(addressList[i] + "=>" + verifiedList[i]);
-    }
+//convert object into string
+const addressObjectToString = (record: {street: string, city: string, zipcode: string} | string) => {
+  if (typeof record !== 'string') {
+    const addressString = `${record.street}, ${record.city} ${record.zipcode}`;
+    return addressString;
+  }
   else 
-    process.stdout.write("Error: " + verifiedList);
+    return record;
+};
+
+export const printResult = (addressList: any[], verifiedList: any[]) => {
+  console.log("Beginning of Records.");
+  for (let i = 0; i < addressList.length; i++) {
+    //convert records to strings
+    const unverifiedAddress = addressObjectToString(addressList[i]);
+    const verifiedAddress = addressObjectToString(verifiedList[i])
+    // console.log(unverifiedAddress + " => " + JSON.stringify(verifiedList[i]));
+  }
+  console.log("End of Records.");
 };

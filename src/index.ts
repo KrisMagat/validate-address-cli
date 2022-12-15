@@ -1,10 +1,8 @@
 #! /usr/bin/env node
 
-import { parseFile } from "./components/parseFile";
-import { validateFile } from "./components/validateFile";
-import { printResult } from "./components/printResult";
+import { evaluate } from "./evaluate";
+import { Command } from "commander";
 
-const { Command } = require("commander");
 //create the program (instance of Command)
 const program = new Command();
 
@@ -26,28 +24,18 @@ program
 //returns object with all program options
 const options = program.opts();
 
-//evaluate csv file
-const evaluate = async () => {
-  if (options.filename) {
-    //save the csv fileName from command argument
-    const fileName = process.argv[3];
-
-    //read and parse the csv file (addressList is an array of objects)
-    const addressList: any = parseFile(fileName);
-
-    //validate the address list with the smarty.com API
-    const verifiedList = await validateFile(addressList);
-  
-    //print the result
-    printResult(addressList, verifiedList);
-  }  
+//hello function
+const hello = () =>{ 
+  process.stdout.write(process.argv[3] + " ");
 }
 
-const hello = () =>{ 
-  // check if the option has been used the user
-  if (options.hello) {
-    return process.argv[3];
-  }
+// run function based on option selected by the user
+if (options.filename) {
+  evaluate();
+}
+
+if (options.hello) {
+  hello();
 }
 
 //display help page if no options selected
