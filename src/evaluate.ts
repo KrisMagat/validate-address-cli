@@ -21,9 +21,13 @@ export const evaluate = async () => {
     const apiResult = await sendApiRequest(addressList);
 
     // validate the API result
-    const verifiedList = validateResult(apiResult);
+    console.log(apiResult[0].result.length);
+    console.log(apiResult[0].result[0].deliveryLine1);
+    console.log(apiResult[0].result[0].components.cityName);
+    console.log(apiResult[0].result[0].components.zipCode);
+    // const verifiedList = validateResult(apiResult);
     
     // print the result
-    printResult(addressList, verifiedList);
+    // printResult(addressList, verifiedList);
   }
 }  

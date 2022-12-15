@@ -1,5 +1,6 @@
 // use smarty.com API to validate information
-import { config } from 'dotenv';
+import path from "path";
+require('dotenv').config({path: path.resolve(__dirname, "../../.env")});
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
 const Lookup = SmartySDK.usStreet.Lookup;
@@ -19,7 +20,7 @@ const createBatchLookUp = (addressList: {}[]) => {
   //create a new lookup from each element of addressList
   addressList.forEach((record: {}) => {
     let lookup = new Lookup();
-    lookup = {...lookup, match: "strict", candidates: 1, ...record}
+    lookup = {...lookup, match: "invalid", candidates: 1, ...record}
     batch.add(lookup);
   })
   return batch;
@@ -27,11 +28,13 @@ const createBatchLookUp = (addressList: {}[]) => {
 
 // send API request and handle response
 //this function is being called from validateFile
-const handleSuccess = (response: { lookups: any }) => response.lookups;
+const handleSuccess = (response: { lookups: any }) => {
+  return response.lookups;
+};
 const handleError = (response: unknown) => response;
-const callApi = async (lookup: any) => {
+const callApi = async (lookups: any) => {
 	try {
-		const result = await client.send(lookup);
+		const result = await client.send(lookups);
 		return handleSuccess(result);
 	} catch(err) {
 		return handleError(err);

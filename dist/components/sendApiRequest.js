@@ -8,8 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendApiRequest = void 0;
+// use smarty.com API to validate information
+const path_1 = __importDefault(require("path"));
+require('dotenv').config({ path: path_1.default.resolve(__dirname, "../../.env") });
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
 const Lookup = SmartySDK.usStreet.Lookup;
@@ -27,18 +33,20 @@ const createBatchLookUp = (addressList) => {
     //create a new lookup from each element of addressList
     addressList.forEach((record) => {
         let lookup = new Lookup();
-        lookup = Object.assign(Object.assign(Object.assign({}, lookup), { match: "strict", candidates: 1 }), record);
+        lookup = Object.assign(Object.assign(Object.assign({}, lookup), { match: "invalid", candidates: 1 }), record);
         batch.add(lookup);
     });
     return batch;
 };
 // send API request and handle response
 //this function is being called from validateFile
-const handleSuccess = (response) => response.lookups;
+const handleSuccess = (response) => {
+    return response.lookups;
+};
 const handleError = (response) => response;
-const callApi = (lookup) => __awaiter(void 0, void 0, void 0, function* () {
+const callApi = (lookups) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield client.send(lookup);
+        const result = yield client.send(lookups);
         return handleSuccess(result);
     }
     catch (err) {
