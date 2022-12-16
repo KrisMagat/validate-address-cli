@@ -8,8 +8,8 @@ const parseFile = (fileData) => {
     const headers = ['street', 'city', 'zipcode'];
     //convert fileData to array
     const dataArray = fileData.split('\r\n');
-    //check file headers if they match
-    if (dataArray[0] === headers.join(',')) {
+    //check file headers if they match and that the list is not empty
+    if (dataArray[0] === headers.join(',') && dataArray.length > 1) {
         //convert each element to an object
         const addressList = dataArray.slice(1).map(element => {
             //split element string into record array

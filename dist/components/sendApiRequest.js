@@ -24,7 +24,6 @@ const authToken = process.env.AUTH_TOKEN;
 const credentials = new SmartyCore.StaticCredentials(authId, authToken);
 const clientBuilder = new SmartyCore.ClientBuilder(credentials);
 const client = clientBuilder.buildUsStreetApiClient();
-console.log(authId, authToken);
 //create a lookup batch (in order to process look ups using only one API call)
 //this function is being called from validateFile
 const createBatchLookUp = (addressList) => {
@@ -37,16 +36,17 @@ const createBatchLookUp = (addressList) => {
         lookup.street = record.street;
         lookup.lastLine = `${record.city} ${record.zipcode}`;
         lookup.candidates = 1;
+        lookup.match = 'enhanced';
         batch.add(lookup);
     });
     return batch;
 };
 // send API request and handle response
 //this function is being called from validateFile
-const handleSuccess = (response) => {
-    return response.lookups;
+const handleSuccess = (response) => response.lookups;
+const handleError = (response) => {
+    console.log('Error with API request. Error:', response);
 };
-const handleError = (response) => response;
 const callApi = (lookups) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield client.send(lookups);

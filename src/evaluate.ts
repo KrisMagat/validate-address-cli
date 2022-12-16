@@ -12,22 +12,28 @@ export const evaluate = async () => {
   //read csv file 
   const csvData = await readFile(fileName);
   
-  //check if there is data in the file
-  if (csvData !== undefined) {
-    //parse the csv data
-    const addressList = parseFile(csvData)!;
-   
-    // send address list to the smarty.com API
-    const apiResult = await sendApiRequest(addressList);
-    console.log(apiResult[0].result[0]);
-    console.log(apiResult[1].result[0]);
+  //check if there is data in the file and end the function
+  if (csvData === undefined) 
+    return console.log('Invalid .csv file.');
+  
+  //parse the csv data
+  const addressList = parseFile(csvData)!;
+  
+  if (addressList === undefined)
+    return console.log('Invalid .csv file.');
 
-    // validate the API result
-    const verifiedList = validateResult(apiResult);
-    
-    console.log(verifiedList);
-    
-    // print the result
-    printResult(addressList, verifiedList);
-  }
+  // send address list to the smarty.com API
+  const apiResult = await sendApiRequest(addressList);
+
+  if (apiResult === undefined)
+    return console.log('Error with API request. Possible invalid .csv file.');
+
+  // validate the API result
+  const verifiedList = validateResult(apiResult);
+
+  if (verifiedList === undefined)
+    return console.log('Error with validating API result.');
+
+  // print the result
+  printResult(addressList, verifiedList);
 }  

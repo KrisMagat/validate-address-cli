@@ -21,20 +21,23 @@ const evaluate = () => __awaiter(void 0, void 0, void 0, function* () {
     const fileName = process.argv[3];
     //read csv file 
     const csvData = yield (0, readFile_1.readFile)(fileName);
-    //check if there is data in the file
-    if (csvData !== undefined) {
-        //parse the csv data
-        const addressList = (0, parseFile_1.parseFile)(csvData);
-        // send address list to the smarty.com API
-        const apiResult = yield (0, sendApiRequest_1.sendApiRequest)(addressList);
-        console.log(apiResult[0].result[0]);
-        console.log(apiResult[1].result[0]);
-        // validate the API result
-        const verifiedList = (0, validateResult_1.validateResult)(apiResult);
-        console.log(verifiedList);
-        // print the result
-        (0, printResult_1.printResult)(addressList, verifiedList);
-    }
+    //check if there is data in the file and end the function
+    if (csvData === undefined)
+        return console.log('Invalid .csv file.');
+    //parse the csv data
+    const addressList = (0, parseFile_1.parseFile)(csvData);
+    if (addressList === undefined)
+        return console.log('Invalid .csv file.');
+    // send address list to the smarty.com API
+    const apiResult = yield (0, sendApiRequest_1.sendApiRequest)(addressList);
+    if (apiResult === undefined)
+        return console.log('Error with API request. Possible invalid .csv file.');
+    // validate the API result
+    const verifiedList = (0, validateResult_1.validateResult)(apiResult);
+    if (verifiedList === undefined)
+        return console.log('Error with validating API result.');
+    // print the result
+    (0, printResult_1.printResult)(addressList, verifiedList);
 });
 exports.evaluate = evaluate;
 //# sourceMappingURL=evaluate.js.map

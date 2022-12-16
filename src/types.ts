@@ -4,5 +4,3 @@ export type addressObject = {
   city: string,
   zipcode: string
 };
-// this is the shape of addressList (for Typescript)
-export type addressList = addressObject[];
