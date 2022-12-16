@@ -14,6 +14,8 @@ exports.evaluate = void 0;
 const readFile_1 = require("./components/readFile");
 const parseFile_1 = require("./components/parseFile");
 const sendApiRequest_1 = require("./components/sendApiRequest");
+const validateResult_1 = require("./components/validateResult");
+const printResult_1 = require("./components/printResult");
 const evaluate = () => __awaiter(void 0, void 0, void 0, function* () {
     //save the csv fileName from command argument
     const fileName = process.argv[3];
@@ -25,14 +27,13 @@ const evaluate = () => __awaiter(void 0, void 0, void 0, function* () {
         const addressList = (0, parseFile_1.parseFile)(csvData);
         // send address list to the smarty.com API
         const apiResult = yield (0, sendApiRequest_1.sendApiRequest)(addressList);
+        console.log(apiResult[0].result[0]);
+        console.log(apiResult[1].result[0]);
         // validate the API result
-        console.log(apiResult[0].result.length);
-        console.log(apiResult[0].result[0].deliveryLine1);
-        console.log(apiResult[0].result[0].components.cityName);
-        console.log(apiResult[0].result[0].components.zipCode);
-        // const verifiedList = validateResult(apiResult);
+        const verifiedList = (0, validateResult_1.validateResult)(apiResult);
+        console.log(verifiedList);
         // print the result
-        // printResult(addressList, verifiedList);
+        (0, printResult_1.printResult)(addressList, verifiedList);
     }
 });
 exports.evaluate = evaluate;

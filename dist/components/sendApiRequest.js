@@ -30,10 +30,13 @@ console.log(authId, authToken);
 const createBatchLookUp = (addressList) => {
     //create new smartycore batch
     const batch = new SmartyCore.Batch();
-    //create a new lookup from each element of addressList
+    //create a new lookup from each element of addressList 
+    //record will be shaped based on type of request (ie. freeform or multiple properties); please read the smarty.com API documentation.
     addressList.forEach((record) => {
         let lookup = new Lookup();
-        lookup = Object.assign(Object.assign(Object.assign({}, lookup), { match: "invalid", candidates: 1 }), record);
+        lookup.street = record.street;
+        lookup.lastLine = `${record.city} ${record.zipcode}`;
+        lookup.candidates = 1;
         batch.add(lookup);
     });
     return batch;

@@ -19,15 +19,15 @@ export const evaluate = async () => {
    
     // send address list to the smarty.com API
     const apiResult = await sendApiRequest(addressList);
+    console.log(apiResult[0].result[0]);
+    console.log(apiResult[1].result[0]);
 
     // validate the API result
-    console.log(apiResult[0].result.length);
-    console.log(apiResult[0].result[0].deliveryLine1);
-    console.log(apiResult[0].result[0].components.cityName);
-    console.log(apiResult[0].result[0].components.zipCode);
-    // const verifiedList = validateResult(apiResult);
+    const verifiedList = validateResult(apiResult);
+    
+    console.log(verifiedList);
     
     // print the result
-    // printResult(addressList, verifiedList);
+    printResult(addressList, verifiedList);
   }
 }  

@@ -1,5 +1,6 @@
 // use smarty.com API to validate information
 import path from "path";
+import { addressObject } from "../types";
 require('dotenv').config({path: path.resolve(__dirname, "../../.env")});
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
@@ -14,13 +15,16 @@ console.log(authId, authToken);
 
 //create a lookup batch (in order to process look ups using only one API call)
 //this function is being called from validateFile
-const createBatchLookUp = (addressList: {}[]) => {
+const createBatchLookUp = (addressList: any[]) => {
   //create new smartycore batch
   const batch = new SmartyCore.Batch(); 
-  //create a new lookup from each element of addressList
-  addressList.forEach((record: {}) => {
+  //create a new lookup from each element of addressList 
+  //record will be shaped based on type of request (ie. freeform or multiple properties); please read the smarty.com API documentation.
+  addressList.forEach((record: { street: string; city: string; zipcode: string; }) => {
     let lookup = new Lookup();
-    lookup = {...lookup, match: "invalid", candidates: 1, ...record}
+    lookup.street = record.street;
+    lookup.lastLine = `${record.city} ${record.zipcode}`
+    lookup.candidates = 1;
     batch.add(lookup);
   })
   return batch;
