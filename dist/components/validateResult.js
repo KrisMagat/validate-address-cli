@@ -1,5 +1,4 @@
 "use strict";
-//evaluate result from API
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateResult = void 0;
 //convert object into string (called from validateResult function)

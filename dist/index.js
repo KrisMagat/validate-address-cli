@@ -20,13 +20,10 @@ program
 //returns object with all program options
 const options = program.opts();
 // run function based on option selected by the user
-if (options.filename) {
-    (0, evaluate_1.evaluate)();
-}
+if (options.filename)
+    //call evaluate function and pass the argument from process.argv[3]
+    (0, evaluate_1.evaluate)(process.argv[3]);
 //display help page if no options selected
-if (!process.argv.slice(2).length) {
+if (!process.argv.slice(2).length)
     program.outputHelp();
-    //display help after errors
-    program.showHelpAfterError();
-}
 //# sourceMappingURL=index.js.map

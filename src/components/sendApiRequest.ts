@@ -1,6 +1,7 @@
 // use smarty.com API to validate information
 import path from "path";
 import chalk from "chalk";
+import { addressObject, apiObject } from "../types";
 require('dotenv').config({path: path.resolve(__dirname, "../../.env")});
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
@@ -13,7 +14,7 @@ const client = clientBuilder.buildUsStreetApiClient();
 
 //create a lookup batch (in order to process look ups using only one API call)
 //this function is being called from validateFile
-const createBatchLookUp = (addressList: any[]) => {
+const createBatchLookUp = (addressList: any[]): {}[] => {
   //create new smartycore batch
   const batch = new SmartyCore.Batch(); 
 
@@ -32,12 +33,12 @@ const createBatchLookUp = (addressList: any[]) => {
 }
 
 // success and error handlers (called from callApi function)
-const handleSuccess = (response: { lookups: any }) => response.lookups;
-const handleError = (response: unknown) => console.log(chalk.red('Error with API request. Error:', response));
+const handleSuccess = (response: { lookups: apiObject[] }): apiObject[] => response.lookups;
+const handleError = (response: unknown): void => console.log(chalk.red('Error with API request. Error:', response));
 
 //call API and return result
 //this function is being called from sendApiRequest function
-const callApi = async (lookups: any) => {
+const callApi = async (lookups: {}): Promise<any[] | void> => {
 	try {
     //connect to Api
 		const result = await client.send(lookups);
@@ -51,11 +52,11 @@ const callApi = async (lookups: any) => {
 }
 
 //validate the address list
-export const sendApiRequest = async (addressList: {}[]) => {
+export const sendApiRequest = async (addressList: addressObject[]): Promise<apiObject[] | void> => {
   //create batch
-  const batch = createBatchLookUp(addressList);
+  const batch: {}[] = createBatchLookUp(addressList);
   //send batch to callApi function
-  const result = await callApi(batch); 
+  const result: apiObject[] | void = await callApi(batch); 
   //result will either be an array OR undefined
   return result;
 };

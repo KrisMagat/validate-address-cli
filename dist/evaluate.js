@@ -20,12 +20,12 @@ const parseFile_1 = require("./components/parseFile");
 const sendApiRequest_1 = require("./components/sendApiRequest");
 const validateResult_1 = require("./components/validateResult");
 const printResult_1 = require("./components/printResult");
-const evaluate = () => __awaiter(void 0, void 0, void 0, function* () {
-    //save the csv fileName from command argument
-    const fileName = process.argv[3];
+const evaluate = (fileName) => __awaiter(void 0, void 0, void 0, function* () {
+    //check if there is data in the file and end the function
+    if (typeof fileName !== 'string')
+        return console.log(chalk_1.default.red('Invalid or missing input.'));
     //read csv file 
     const csvData = yield (0, readFile_1.readFile)(fileName);
-    //check if there is data in the file and end the function
     if (csvData === undefined)
         return console.log(chalk_1.default.red('Invalid or missing .csv file.'));
     //parse the csv data

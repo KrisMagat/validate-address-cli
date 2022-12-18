@@ -1,20 +1,21 @@
 //print result from input object and api validation
 import chalk from "chalk";
+import { addressObject } from "../types";
 
 //convert original address into string with color applied (called from printResult function)
-const originalAddressToPrint = (record: { street: string; city: string; zipcode: string; }) => {
+const originalAddressToPrint = (record: addressObject): string => {
   const originalAddress = chalk.cyan(`${record.street},${record.city},${record.zipcode}`);
   return originalAddress;
 };
 
 //convert original address into string with color applied (called from printResult function)
-const verifiedAddressToPrint = (record: string) => {
+const verifiedAddressToPrint = (record: string): string => {
   const verifiedAddress = record === 'Invalid Address' ? chalk.red(record) : chalk.green(record);
   return verifiedAddress;
 };
 
 //print results
-export const printResult = (addressList: any[], verifiedList: string[]) => {
+export const printResult = (addressList: addressObject[], verifiedList: string[]): void => {
   //print the beginning of output
   console.log("");
   console.log("");
@@ -24,10 +25,10 @@ export const printResult = (addressList: any[], verifiedList: string[]) => {
   //iterate through list to print each result
   for (let i = 0; i < addressList.length; i++) {
     //prep original records to be printed
-    const originalAddress = originalAddressToPrint(addressList[i]);
+    const originalAddress: string = originalAddressToPrint(addressList[i]);
 
     //prep verified records to be printed
-    const verifiedAddress = verifiedAddressToPrint(verifiedList[i]);
+    const verifiedAddress: string = verifiedAddressToPrint(verifiedList[i]);
     
     //print the validation results
     console.log(originalAddress + chalk.magenta("  =>  ") + verifiedAddress);

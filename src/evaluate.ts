@@ -6,14 +6,14 @@ import { sendApiRequest } from "./components/sendApiRequest";
 import { validateResult } from "./components/validateResult";
 import { printResult } from "./components/printResult";
 
-export const evaluate = async () => {
-  //save the csv fileName from command argument
-  const fileName = process.argv[3];
+export const evaluate = async (fileName: string): Promise<void> => {
+  //check if there is data in the file and end the function
+  if (typeof fileName !== 'string')
+    return console.log(chalk.red('Invalid or missing input.'));
 
   //read csv file 
   const csvData = await readFile(fileName);
   
-  //check if there is data in the file and end the function
   if (csvData === undefined) 
     return console.log(chalk.red('Invalid or missing .csv file.'));
   
