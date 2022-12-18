@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.evaluate = void 0;
 //evaluate csv file
+const chalk_1 = __importDefault(require("chalk"));
 const readFile_1 = require("./components/readFile");
 const parseFile_1 = require("./components/parseFile");
 const sendApiRequest_1 = require("./components/sendApiRequest");
@@ -23,19 +27,19 @@ const evaluate = () => __awaiter(void 0, void 0, void 0, function* () {
     const csvData = yield (0, readFile_1.readFile)(fileName);
     //check if there is data in the file and end the function
     if (csvData === undefined)
-        return console.log('Invalid .csv file.');
+        return console.log(chalk_1.default.red('Invalid or missing .csv file.'));
     //parse the csv data
     const addressList = (0, parseFile_1.parseFile)(csvData);
     if (addressList === undefined)
-        return console.log('Invalid .csv file.');
+        return console.log(chalk_1.default.red('Invalid or missing .csv file.'));
     // send address list to the smarty.com API
     const apiResult = yield (0, sendApiRequest_1.sendApiRequest)(addressList);
     if (apiResult === undefined)
-        return console.log('Error with API request. Possible invalid .csv file.');
+        return console.log(chalk_1.default.red('Possible invalid file or API credentials.'));
     // validate the API result
     const verifiedList = (0, validateResult_1.validateResult)(apiResult);
     if (verifiedList === undefined)
-        return console.log('Error with validating API result.');
+        return console.log(chalk_1.default.red('Possible invalid file or API credentials.'));
     // print the result
     (0, printResult_1.printResult)(addressList, verifiedList);
 });

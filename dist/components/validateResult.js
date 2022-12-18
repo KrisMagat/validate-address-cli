@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateResult = void 0;
 //convert object into string (called from validateResult function)
 const apiObjectToString = (record) => {
+    //save information from result object into variables
     const deliveryLine1 = record.result[0].deliveryLine1;
     const cityName = record.result[0].components.cityName;
     const zipCode = record.result[0].components.zipCode;
@@ -25,7 +26,7 @@ const validateResult = (apiResult) => {
             return validatedAddress;
         }
     });
-    //returns an array showing 'Invalid Address' or the corrected address to be printed
+    //returns an array showing 'Invalid Address' or the validated address to be printed
     return verifiedList;
 };
 exports.validateResult = validateResult;

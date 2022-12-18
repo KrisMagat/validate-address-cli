@@ -8,18 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readFile = void 0;
 //read csv file
 const fs_1 = require("fs");
+const chalk_1 = __importDefault(require("chalk"));
+// success and error handlers (called from callApi function)
+const handleSuccess = (response) => response.toString();
+const handleError = (response) => console.log(chalk_1.default.red('Error with reading file. Error:', response));
 //create function to read the file from current directory where file is located
 const readFile = (fileName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const fileData = yield fs_1.promises.readFile(fileName);
-        return fileData.toString();
+        //success!
+        const result = yield fs_1.promises.readFile(fileName);
+        return handleSuccess(result);
     }
     catch (err) {
-        console.log(`Got an error trying to read the file: ${err}`);
+        //error!
+        return handleError(err);
     }
 });
 exports.readFile = readFile;

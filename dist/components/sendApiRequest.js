@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendApiRequest = void 0;
 // use smarty.com API to validate information
 const path_1 = __importDefault(require("path"));
+const chalk_1 = __importDefault(require("chalk"));
 require('dotenv').config({ path: path_1.default.resolve(__dirname, "../../.env") });
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
@@ -41,18 +42,20 @@ const createBatchLookUp = (addressList) => {
     });
     return batch;
 };
-// send API request and handle response
-//this function is being called from validateFile
+// success and error handlers (called from callApi function)
 const handleSuccess = (response) => response.lookups;
-const handleError = (response) => {
-    console.log('Error with API request. Error:', response);
-};
+const handleError = (response) => console.log(chalk_1.default.red('Error with API request. Error:', response));
+//call API and return result
+//this function is being called from sendApiRequest function
 const callApi = (lookups) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        //connect to Api
         const result = yield client.send(lookups);
+        //success!
         return handleSuccess(result);
     }
     catch (err) {
+        //error!
         return handleError(err);
     }
 });
@@ -60,8 +63,9 @@ const callApi = (lookups) => __awaiter(void 0, void 0, void 0, function* () {
 const sendApiRequest = (addressList) => __awaiter(void 0, void 0, void 0, function* () {
     //create batch
     const batch = createBatchLookUp(addressList);
-    //send batch to API
+    //send batch to callApi function
     const result = yield callApi(batch);
+    //result will either be an array OR undefined
     return result;
 });
 exports.sendApiRequest = sendApiRequest;

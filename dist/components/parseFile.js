@@ -1,7 +1,11 @@
 "use strict";
-//parse the csv file
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseFile = void 0;
+//parse the csv file
+const chalk_1 = __importDefault(require("chalk"));
 //create function to parse the file
 const parseFile = (fileData) => {
     //expected headers
@@ -23,7 +27,7 @@ const parseFile = (fileData) => {
         return addressList;
     }
     else
-        console.log(`Got an error trying to parse the file. Please ensure the .csv file is in the correct format.`);
+        console.log(chalk_1.default.red(`Got an error trying to parse the file. Please ensure the .csv file is in the correct format.`));
 };
 exports.parseFile = parseFile;
 //# sourceMappingURL=parseFile.js.map

@@ -18,27 +18,20 @@ program
   .version("1.0.0")
   .description("A CLI program for validating US addresses from a CSV file using smarty.com API")
   .option("-f, --filename [value]", "specify CSV file to evaluate")
-  .option("-he, --hello [value]", "test hello [name]")
   .parse(process.argv);
 
 //returns object with all program options
 const options = program.opts();
-
-//hello function
-const hello = () =>{ 
-  process.stdout.write(process.argv[3] + " ");
-}
 
 // run function based on option selected by the user
 if (options.filename) {
   evaluate();
 }
 
-if (options.hello) {
-  hello();
-}
-
 //display help page if no options selected
 if (!process.argv.slice(2).length) {
   program.outputHelp();
+
+//display help after errors
+program.showHelpAfterError();
 }

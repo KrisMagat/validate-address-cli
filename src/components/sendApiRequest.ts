@@ -1,6 +1,6 @@
 // use smarty.com API to validate information
 import path from "path";
-import { addressObject } from "../types";
+import chalk from "chalk";
 require('dotenv').config({path: path.resolve(__dirname, "../../.env")});
 const SmartySDK = require("smartystreets-javascript-sdk");
 const SmartyCore = SmartySDK.core;
@@ -16,6 +16,7 @@ const client = clientBuilder.buildUsStreetApiClient();
 const createBatchLookUp = (addressList: any[]) => {
   //create new smartycore batch
   const batch = new SmartyCore.Batch(); 
+
   //create a new lookup from each element of addressList 
   //record will be shaped based on type of request (ie. freeform or multiple properties); please read the smarty.com API documentation.
   addressList.forEach((record: { street: string; city: string; zipcode: string; }) => {
@@ -26,20 +27,25 @@ const createBatchLookUp = (addressList: any[]) => {
     lookup.match = 'enhanced';
     batch.add(lookup);
   })
+
   return batch;
 }
 
-// send API request and handle response
-//this function is being called from validateFile
+// success and error handlers (called from callApi function)
 const handleSuccess = (response: { lookups: any }) => response.lookups;
-const handleError = (response: unknown) => {
-  console.log('Error with API request. Error:', response);
-};
+const handleError = (response: unknown) => console.log(chalk.red('Error with API request. Error:', response));
+
+//call API and return result
+//this function is being called from sendApiRequest function
 const callApi = async (lookups: any) => {
 	try {
+    //connect to Api
 		const result = await client.send(lookups);
+    //success!
 		return handleSuccess(result);
-	} catch(err) {
+	} 
+  catch(err) {
+    //error!
 		return handleError(err);
 	}
 }
@@ -48,7 +54,8 @@ const callApi = async (lookups: any) => {
 export const sendApiRequest = async (addressList: {}[]) => {
   //create batch
   const batch = createBatchLookUp(addressList);
-  //send batch to API
+  //send batch to callApi function
   const result = await callApi(batch); 
+  //result will either be an array OR undefined
   return result;
 };

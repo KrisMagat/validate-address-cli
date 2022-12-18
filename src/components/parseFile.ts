@@ -1,11 +1,14 @@
 //parse the csv file
+import chalk from "chalk";
 
 //create function to parse the file
 export const parseFile = (fileData: string) => {
   //expected headers
   const headers = ['street', 'city', 'zipcode'];
+
   //convert fileData to array
   const dataArray = fileData.split('\r\n');
+
   //check file headers if they match and that the list is not empty
   if (dataArray[0] === headers.join(',') && dataArray.length > 1) {
     //convert each element to an object
@@ -18,8 +21,9 @@ export const parseFile = (fileData: string) => {
       },{});
       return object;
     });
+
     return addressList;
-  }
+}
   else 
-    console.log(`Got an error trying to parse the file. Please ensure the .csv file is in the correct format.`);
+    console.log(chalk.red(`Got an error trying to parse the file. Please ensure the .csv file is in the correct format.`));
 };

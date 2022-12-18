@@ -6,6 +6,7 @@ const apiObjectToString = (record: { result: {
   cityName: string; zipCode: string; plus4Code: string; 
 }; 
 }[]; }) => {
+  //save information from result object into variables
   const deliveryLine1 = record.result[0].deliveryLine1;
   const cityName = record.result[0].components.cityName;
   const zipCode = record.result[0].components.zipCode;
@@ -29,6 +30,7 @@ export const validateResult = (apiResult: any[]) => {
       return validatedAddress;
     }
   });
-  //returns an array showing 'Invalid Address' or the corrected address to be printed
+
+  //returns an array showing 'Invalid Address' or the validated address to be printed
   return verifiedList;
 }
