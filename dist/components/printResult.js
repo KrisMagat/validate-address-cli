@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.printResult = void 0;
 //print result from input object and api validation
 const chalk_1 = __importDefault(require("chalk"));
-//convert original address into string with color applied (called from printResult function)
+//apply color to original address (called from printResult function)
 const originalAddressToPrint = (record) => {
-    const originalAddress = chalk_1.default.cyan(`${record.street},${record.city},${record.zipcode}`);
+    const originalAddress = chalk_1.default.cyan(record);
     return originalAddress;
 };
-//convert original address into string with color applied (called from printResult function)
+//apply color to verified address called from printResult function)
 const verifiedAddressToPrint = (record) => {
     const verifiedAddress = record === 'Invalid Address' ? chalk_1.default.red(record) : chalk_1.default.green(record);
     return verifiedAddress;

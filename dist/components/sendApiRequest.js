@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendApiRequest = void 0;
-// use smarty.com API to validate information
 const path_1 = __importDefault(require("path"));
 const chalk_1 = __importDefault(require("chalk"));
 require('dotenv').config({ path: path_1.default.resolve(__dirname, "../../.env") });
@@ -25,38 +24,31 @@ const authToken = process.env.AUTH_TOKEN;
 const credentials = new SmartyCore.StaticCredentials(authId, authToken);
 const clientBuilder = new SmartyCore.ClientBuilder(credentials);
 const client = clientBuilder.buildUsStreetApiClient();
-//create a lookup batch (in order to process look ups using only one API call)
-//this function is being called from validateFile
+// create a lookup batch (in order to process look ups using only one API call) (called from sendApiRequest)
 const createBatchLookUp = (addressList) => {
-    //create new smartycore batch
+    // create new smartycore batch
     const batch = new SmartyCore.Batch();
-    //create a new lookup from each element of addressList 
-    //record will be shaped based on type of request (ie. freeform or multiple properties); please read the smarty.com API documentation.
+    // create a new lookup from each element of addressList 
     addressList.forEach((record) => {
+        // record will be shaped based on freeform type request, the entire address is listed under .street property
+        // please read the smarty.com API documentation.
         let lookup = new Lookup();
-        lookup.street = record.street;
-        lookup.lastLine = `${record.city} ${record.zipcode}`;
+        lookup.street = record;
         lookup.candidates = 1;
         lookup.match = 'enhanced';
         batch.add(lookup);
     });
     return batch;
 };
-// success and error handlers (called from callApi function)
-const handleSuccess = (response) => response.lookups;
-const handleError = (response) => console.log(chalk_1.default.red('Error with API request. Error:', response));
-//call API and return result
-//this function is being called from sendApiRequest function
+//call API and return result (called from sendApiRequest)
 const callApi = (lookups) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //connect to Api
         const result = yield client.send(lookups);
-        //success!
-        return handleSuccess(result);
+        return result.lookups;
     }
     catch (err) {
-        //error!
-        return handleError(err);
+        console.log(chalk_1.default.red('Error with API request. Error:', err));
     }
 });
 //validate the address list

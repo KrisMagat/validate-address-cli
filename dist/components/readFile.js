@@ -16,19 +16,14 @@ exports.readFile = void 0;
 //read csv file
 const fs_1 = require("fs");
 const chalk_1 = __importDefault(require("chalk"));
-// success and error handlers (called from callApi function)
-const handleSuccess = (response) => response.toString();
-const handleError = (response) => console.log(chalk_1.default.red('Error with reading file. Error:', response));
 //create function to read the file from current directory where file is located
 const readFile = (fileName) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //success!
         const result = yield fs_1.promises.readFile(fileName);
-        return handleSuccess(result);
+        return result.toString();
     }
     catch (err) {
-        //error!
-        return handleError(err);
+        console.log(chalk_1.default.red('Error with reading file. Error:', err));
     }
 });
 exports.readFile = readFile;

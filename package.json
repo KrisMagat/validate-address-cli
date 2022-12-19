@@ -1,20 +1,26 @@
 {
   "name": "validate-address-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "validate-address-cli is a CLI program for validating US addresses from a CSV file using smarty.com API.",
   "main": "index.js",
   "bin": {
     "validate-address": "./dist/index.js"
   },
   "scripts": {
     "build": "npx tsc",
-    "test": "jest --coverage"
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "csv",
+    "verify address",
+    "USPS",
+    "smarty.com",
+    "validate address"
+  ],
+  "author": "Kris Magat",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^5.2.0",
+    "chalk": "^4.1.2",
     "commander": "^9.4.1",
     "csv-parse": "^5.3.3",
     "dotenv": "^16.0.3",

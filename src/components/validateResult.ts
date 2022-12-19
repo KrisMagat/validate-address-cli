@@ -27,7 +27,6 @@ export const validateResult = (apiResult: apiObject[]): string[] | void => {
       return validatedAddress;
     }
   });
-
   //returns an array showing 'Invalid Address' or the validated address to be printed
   return verifiedList;
 }
