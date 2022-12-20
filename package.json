@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.12",
+    "@types/smartystreets-javascript-sdk": "^1.6.6",
     "jest": "^29.3.1",
     "ts-jest": "^29.0.3",
     "typescript": "^4.9.4"

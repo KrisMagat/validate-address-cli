@@ -1,13 +1,4 @@
 import { sendApiRequest } from "../../src/components/sendApiRequest";
-import { apiObject } from "../../src/types";
-
-const validatedAddressList: apiObject[] = [{ 
-  result: [{
-    deliveryLine1: "123 Main St",
-    components: { cityName: "Anytown",zipCode: "12345", plus4Code: "6789" },
-    analysis: { enhancedMatch: 'usps-address'}
-    }]
-  }];
 
 describe("test sendApiRequest function", () => {
   //first record is invalid, second record is valid

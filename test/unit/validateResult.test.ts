@@ -22,15 +22,5 @@ describe("test validateResult function", () => {
   it("should return an array of strings", () => {
     expect(Array.isArray(verifiedList) && typeof verifiedList[0] === "string").toEqual(true);
   });
-
-  // it("should return a string for Invalid Address", () => {
-  //   expect(verifiedList[1]).toEqual('Invalid Address');
-  // });
-
-  // it("should console.log error message and return undefined", () => {
-  //   const consoleSpy = jest.spyOn(console, "log");
-  //   const result = await readFile(missingFile);
-  //   expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Error with reading file."));
-  //   expect(result).toEqual(undefined);
-  // });
+  
 });

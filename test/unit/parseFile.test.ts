@@ -1,4 +1,3 @@
-import { forEachChild } from "typescript";
 import { parseFile } from "../../src/components/parseFile";
 
 describe("test parseFile function", () => {
