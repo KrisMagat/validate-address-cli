@@ -1,7 +1,7 @@
 import { readFile } from "../../src/components/readFile";
 
 describe("test readFile function", () => {
-  const validFile = "validMockfile.csv";
+  const validFile = "test/validMockFile.csv";
   const missingFile = "missingMockfile.csv";
   
   it("should return a string", async () => {

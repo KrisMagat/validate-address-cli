@@ -26,6 +26,7 @@ const options = program.opts();
 // run function based on option selected by the user
 if (options.filename) 
   //call evaluate function and pass the argument from process.argv[3]
+  console.log(process.argv[3]);
   evaluate(process.argv[3]);
 
 //display help page if no options selected
