@@ -30,7 +30,7 @@ export const printResult = (addressList: string[], verifiedList: string[]): void
     const verifiedAddress: string = verifiedAddressToPrint(verifiedList[i]);
     
     //print the validation results
-    console.log(originalAddress + chalk.magenta("  =>  ") + verifiedAddress);
+    console.log(originalAddress + chalk.magenta("  ->  ") + verifiedAddress);
   }
 
   //print the end of output

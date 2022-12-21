@@ -15,9 +15,12 @@ export const parseFile = (fileData: string): string[] | void => {
     //iterate thru each record and add to list
     dataArray.slice(1).forEach((record) => {
       //check if record is not empty before adding to address list
-      if (record)
-        addressList.push(record);
-     });
+      if (record) {
+        //add space after each comma
+        const newRecord = record.replace(/,/ig, ", ");
+        addressList.push(newRecord);
+      }
+    });
 
     return addressList;
 }
