@@ -37,7 +37,7 @@ Ensure that you have a valid `.csv` file. File must have the following headers (
 
 example.csv
 ```csv
-street,city,zipcode
+Street,City,Zip Code
 123 Any Street,Anytown,12345
 ```
 
