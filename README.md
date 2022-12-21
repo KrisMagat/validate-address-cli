@@ -1,4 +1,3 @@
-
 # validate-address-cli
 
 An open-source command-line interface program that validates US addresses from a .csv file. The information is validated using a third-party API (https://www.smarty.com) and will require a valid user account at smarty.com.
