@@ -26,10 +26,10 @@ If you encounter this error, run the command below from the repository's root di
 ## Environment Variables
 
 To run this program, you will need to create an `.env` file in the repository's root directory and add the following environment variables to your `.env` file. These are the smarty.com API credentials. A valid user account is required.
-
-`AUTH_ID: [authentication id]`
-`AUTH_TOKEN: [authentication token]`
-
+```
+AUTH_ID: [authentication id]
+AUTH_TOKEN: [authentication token]
+```
 Obtain API credentials from https://www.smarty.com.
 
 ## How to Use
