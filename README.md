@@ -33,7 +33,7 @@ AUTH_TOKEN: [authentication token]
 Obtain API credentials from https://www.smarty.com.
 
 ## How to Use
-Ensure that you have a valid `.csv` file. File must have the following headers (street, city, zipcode) and no table name. The file must have at least one address to be validated.
+Ensure that you have a valid `.csv` file. File must have the following headers (Street, City, Zip Code) and no table name. The file must have at least one address to be validated.
 
 example.csv
 ```csv
